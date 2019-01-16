@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href=/Users/nebilbouaziz/Desktop/selima/js/project/Project.css>
+    <title>Random Facts</title>
+    <link rel="icon"href="http://pngimg.com/uploads/exclamation_mark/exclamation_mark_PNG42.png">
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBwcg0p4C2Qm7-OOjaCHPS-GreY9qX9ll0",
+    authDomain: "facts-3fb5.firebaseapp.com",
+    databaseURL: "https://facts-3fb5.firebaseio.com",
+    projectId: "facts-3fb5",
+    storageBucket: "facts-3fb5.appspot.com",
+    messagingSenderId: "446289678006"
+  };
+  firebase.initializeApp(config);
+</script>
+</head>
+<body >
+    <div class="settings">
+            <a class="item" href="#"><i class="fa fa-cog fa-fw" aria-hidden="true"></i>&nbsp; Settings</a>
+            <a class="random">Random Facts</a>
+        <div id="menu" class="col-md-4 col-sm-4 col-xs-7" style="margin-left:-730px">
+            <button id="btn" onclick="Italic()">italic</button>
+            <br>
+            <button id="btn" onclick="bold()">bold</button>
+            <br>
+            <button id="btn" onclick="underline()">underline</button>
+            <br>
+            <select id="input-font" class="input1"  onchange="changeFont (this);">
+                <option value="Times New Roman" selected ="selected">Times New Roman</option>
+                <option value="Arial">Arial</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="verdana">Verdana</option>
+              </select>
+              <br>
+          <select onchange="changeSize(this)" class=dropdown>
+                  <option value="30px" selected="selected">30</option>
+                  <option value="32px" >32</option>
+                  <option value="34px" >34</option>
+                  <option value="36px" >36</option>
+                  <option value="38px" >38</option>
+                </select>
+                <p class="tip">click anywhere to hide the menu</p>
+        </div>  
+    </div>
+<br>
+<br>
+<br>
+<div class="site">
+    <div id="content">
+            <div class="col-md-8 col-sm-12 col-xs-12" id="element">
+                    <p class="space">
+                Russia has a larger surface than Pluto
+                    </p>
+                    <i class="fas fa-heart" id="heart" onclick="like()"></i>
+            </div>
+
+            <div class="col-md-3 col-sm-12 col-xs-12" id="spacex">
+                    <form id="form">
+                        <input type="text" id="name">
+                        <button onclick="send(event)" >valider</button>
+                    </form>
+            </div>
+
+            <div class="col-md-8 col-sm-12 col-xs-12" id="element">
+                    <p class="space">
+                Human birth control pills work on gorillas
+                    </p>
+                    <i class="fas fa-heart" id="heart" onclick="like()"></i>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12" id="element">
+                    <p class="space">
+                caterpillars have over 2000 muscles
+                    </p>
+                    <i class="fas fa-heart" id="heart" onclick="like()"></i>
+            </div>
+    </div>
+
+    
+</div>
+
+    
+
+<script>
+        //document.getElementById('form').addEventListener('submit', send)
+        console.log('hello',document.getElementById('form'))
+
+        function send(event){
+            console.log('hello')
+            event.preventDefault()
+            var name= document.getElementById('name').value
+            sendData(name)
+        }
+        var feedback = firebase.database().ref('feedback')
+        
+        function sendData(name){
+            var fb=feedback.push()
+            fb.set({
+                n:name
+            })
+        }
+        function receive(){
+            feedback.once("value").then(function(data){
+                data.forEach(function(donnee){
+                    document.getElementById('content').innerHTML+=`<div class="col-md-8 col-sm-12 col-xs-9" id="element">`+`<p class="Space">`+donnee.val().n +`</p>`+`<i class="fas fa-heart" id="heart" onclick="like()"></i>`+"</div>"+ "<br/>"
+
+        })
+
+    })
+}
+
+receive()
+
+</script>
+<script
+src="https://code.jquery.com/jquery-3.3.1.js"
+integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+crossorigin="anonymous"></script>
+<script src="/Users/nebilbouaziz/Desktop/selima/js/project/Project.js"></script>
+</body>
+
+
+</html>
